@@ -106,7 +106,7 @@ def getContent(pagesize,service):
         for item in items:
             print(u'{0} ({1})'.format(item['id'], item['name']))
 
-    anyKey = input("Press any key to continue!")
+    anyKey = raw_input("Press any key to continue!")
     os.system('clear')
     menuCLI()
 
@@ -119,7 +119,7 @@ def uploadFile(filename,filepath,mimetype,service):
                                         fields='id').execute()
     print('File ID: %s' % file.get('id'))
 
-    anyKey = input("Press any key to continue!")
+    anyKey = raw_input("Press any key to continue!")
     os.system('clear')
     menuCLI()
 
@@ -136,7 +136,7 @@ def downLoadFile(id,filepath,service):
         fh.seek(0)
         f.write(fh.read())
 
-    anyKey = input("Press any key to continue!")
+    anyKey = raw_input("Press any key to continue!")
     os.system('clear')
     menuCLI()
 
@@ -162,7 +162,7 @@ def downLoadAllFiles(service):
                 fh.seek(0)
                 f.write(fh.read())
 
-    anyKey = input("Press any key to continue!")
+    anyKey = raw_input("Press any key to continue!")
     os.system('clear')
     menuCLI()
 
@@ -178,15 +178,15 @@ def menuCLI():
 
     while True:
         try:
-            choice=int(input("Enter your choice : "))
+            choice=int(raw_input("Enter your choice : "))
 
             if choice == 1:
-                pagesize = input("Enter the number of files you want to view. (1 - 100) : ")
+                pagesize = raw_input("Enter the number of files you want to view. (1 - 100) : ")
                 getContent(pagesize,service)
                 break
 
             elif choice == 2:
-                filename = input("Enter the name you want to give your file : ")
+                filename = raw_input("Enter the name you want to give your file : ")
                 print("\nWe need to know the type of document you are uploading\n")
 
 
@@ -200,7 +200,7 @@ def menuCLI():
                 for k, v in mime_types.items():
                     print(k, '>', v)
                 print("\n\n")
-                mimetype = input("We need the know the type of document you are uploading : ")
+                mimetype = raw_input("We need the know the type of document you are uploading : ")
 
 
                 uploadFile(filename,filepath,mimetype,service)
@@ -208,11 +208,11 @@ def menuCLI():
 
             elif choice == 3:
                 print("We need the file Id to upload to drive ")
-                pagesize = input("Enter the number of files you want to view. (1 - 100) : ")
+                pagesize = int(raw_input("Enter the number of files you want to view. (1 - 100) : "))
                 getFileList(pagesize,service)
 
-                fileid = input("Enter the file id that you want to download : ")
-                filename = input("Enter the name that you want the file to be saved as with extension (.jpeg,.doc,.pdf)")
+                fileid = raw_input("Enter the file id that you want to download : ")
+                filename = raw_input("Enter the name that you want the file to be saved as with extension (.jpeg,.doc,.pdf)")
                 downLoadFile(fileid,downLoadPath+'/'+filename,service)
                 break
 
@@ -227,6 +227,8 @@ def menuCLI():
                 menuCLI()
         except ValueError:
             print("Invalid Choice. Enter 1-5 : ")
+        except EOFError:
+            print("EOF Error in Menu")
 
     exit
 
