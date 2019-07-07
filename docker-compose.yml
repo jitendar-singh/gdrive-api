@@ -1,0 +1,14 @@
+version: '3.7'
+
+services:
+   web:
+     build: ./web
+     volumes:
+       - web_data:/var/lib/web_data
+     secrets:
+       - client_secret
+secrets:
+   client_secret:
+     file: client_secret.json
+volumes:
+    web_data:

@@ -1,0 +1,15 @@
+{
+    "installed":{ 
+        "client_id":"134534671689-je2rqvthbn7qlajmb4o15pu5a5ds0rbi.apps.googleusercontent.com",
+        "project_id":"gdrive-redhat",
+        "auth_uri":"https://accounts.google.com/o/oauth2/auth",
+        "token_uri":"https://oauth2.googleapis.com/token",
+        "auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs",
+        "client_secret":"ElZR5OYF4Fh5pr_kiQ7rkul4",
+        "redirect_uris":[  
+            "urn:ietf:wg:oauth:2.0:oob",
+            "http://localhost"
+        ]
+    }
+
+}
