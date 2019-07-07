@@ -53,13 +53,6 @@ mime_types= {
         }
 
 
-
-
-
-
-
-
-
 header = "\
 _________               .__    __________                   __               __\n\
 \_   ___ \  ____   ____ |  |   \______   \_______  ____    |__| ____   _____/  |_\n\
@@ -173,24 +166,6 @@ def downLoadAllFiles(service):
     os.system('clear')
     menuCLI()
 
-
-
-"""
-    Creating the main menu for the user to interact.
-            \_   ___ \  ____   ____ |  |   \______   \_______  ____    |__| ____   _____/  |_
-        /    \  \/ /  _ \ /  _ \|  |    |     ___/\_  __ \/  _ \   |  |/ __ \_/ ___\   __\
-        \     \___(  <_> |  <_> )  |__  |    |     |  | \(  <_> )  |  \  ___/\  \___|  |
-         \______  /\____/ \____/|____/  |____|     |__|   \____/\__|  |\___  >\___  >__|
-                \/                                             \______|    \/     \/
-
-        1. List all files in the drive
-        2. Upload a file to the drive
-        3. Download a file from the drive
-        4. Downlaod all files from the drive
-        5. Quit
-        Enter your choice :
-
-"""
 
 
 def menuCLI():
