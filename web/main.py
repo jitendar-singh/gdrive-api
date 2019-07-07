@@ -6,6 +6,9 @@ from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from apiclient.http import MediaFileUpload, MediaIoBaseDownload
+from pyfiglet import Figlet
+
+
 
 import auth
 
@@ -15,7 +18,7 @@ CLIENT_SECRET_FILE = 'client_secret.json'
 
 authInst = auth.auth(SCOPES,CLIENT_SECRET_FILE)
 service = authInst.getAuth()
-
+f = Figlet(font='starwars')
 
 
 cwd = os.getcwd()
@@ -53,13 +56,13 @@ mime_types= {
         }
 
 
-header = "\
-_________               .__    __________                   __               __\n\
-\_   ___ \  ____   ____ |  |   \______   \_______  ____    |__| ____   _____/  |_\n\
-/    \  \/ /  _ \ /  _ \|  |    |     ___/\_  __ \/  _ \   |  |/ __ \_/ ___\   __\\\n\
-\     \___(  <_> |  <_> )  |__  |    |     |  | \(  <_> )  |  \  ___/\  \___|  |\n\
- \______  /\____/ \____/|____/  |____|     |__|   \____/\__|  |\___  >\___  >__|\n\
-        \/                                             \______|    \/     \/      \n"
+# header = "\
+# _________               .__    __________                   __               __\n\
+# \_   ___ \  ____   ____ |  |   \______   \_______  ____    |__| ____   _____/  |_\n\
+# /    \  \/ /  _ \ /  _ \|  |    |     ___/\_  __ \/  _ \   |  |/ __ \_/ ___\   __\\\n\
+# \     \___(  <_> |  <_> )  |__  |    |     |  | \(  <_> )  |  \  ___/\  \___|  |\n\
+#  \______  /\____/ \____/|____/  |____|     |__|   \____/\__|  |\___  >\___  >__|\n\
+#         \/                                             \______|    \/     \/      \n"
 
 
 # header= "\\n
@@ -169,7 +172,8 @@ def downLoadAllFiles(service):
 
 
 def menuCLI():
-    print(header)
+    # print(header)
+    print(f.renderText('Google Drive'))
     print("1. List all files in the drive")
     print("2. Upload a file to the drive")
     print("3. Download a file from the drive")
