@@ -19,14 +19,17 @@ Complete the steps described in the rest of this page to use a simple Python com
 ###### -The application will proceed automatically, and you may close the window/tab.
 
 # Application Funcationalities
-###### - List all files in the drive
-###### - Upload a file to the drive
-###### - Download a file from the drive
-###### Downloads a file related to the file id entered and stores it inside the download folder.
-###### - Downlaod all files from the drive
-###### Downloads all file stores it inside the download folder.
+#### List all files in the drive
+######  Lists all the files inside the google drive
+#### Upload a file to the drive
+######  Uploads a file present in the sample directory to the google drive
+#### Download a file from the drive
+######      Downloads a file related to the file id entered and stores it inside the download folder.
+##### Downlaod all files from the drive
+######      Downloads all file stores it inside the download folder.
 
 # Notes
 ### Please ignore the docker-compose.yml, Dockerfile this is work in progress.
 
 
+# Screenshot Attached 
