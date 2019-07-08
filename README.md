@@ -5,7 +5,7 @@ Complete the steps described in the rest of this page to use a simple Python com
 ###### The pip package management tool
 ###### A Google account with Google Drive enabled
 # Step 1: Clone the project into your local machine using shell
-###### git clone https://github.com/sunnyconcise/gdrive-api
+###### git clone https://github.com/sunnyconcise/gdrive-api.git
 # Step 2: Install the required packages
 ##### Step 2.1: Make web as you current working directory
 ##### Step 2.2: Run the following command to install the library using pip:
