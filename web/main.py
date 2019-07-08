@@ -7,6 +7,7 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from apiclient.http import MediaFileUpload, MediaIoBaseDownload
 from pyfiglet import Figlet
+from io import BytesIO
 
 
 
@@ -22,8 +23,8 @@ f = Figlet(font='starwars')
 
 
 cwd = os.getcwd()
-filepath= cwd+'/sample/sample.jpg'
-downLoadPath = cwd+'/downloads'
+filepath = os.path.join(cwd,'sample','sample.jpg')
+downLoadPath = os.path.join(cwd,'downloads')
 mimetype = 'image/jpeg'
 
 mime_types= {
@@ -56,64 +57,57 @@ mime_types= {
         }
 
 
-# header = "\
-# _________               .__    __________                   __               __\n\
-# \_   ___ \  ____   ____ |  |   \______   \_______  ____    |__| ____   _____/  |_\n\
-# /    \  \/ /  _ \ /  _ \|  |    |     ___/\_  __ \/  _ \   |  |/ __ \_/ ___\   __\\\n\
-# \     \___(  <_> |  <_> )  |__  |    |     |  | \(  <_> )  |  \  ___/\  \___|  |\n\
-#  \______  /\____/ \____/|____/  |____|     |__|   \____/\__|  |\___  >\___  >__|\n\
-#         \/                                             \______|    \/     \/      \n"
-
-
-# header= "\\n
-# ______    ___________  __________           .            .           .        ------------------\n
-# \     \   |_________| |          \          |            |           /\       ------------------ \n
-#  |     \  |           |           |         |            |          /  \             | |          \n
-#  |     /  |           |           |         |            |         /    \            | |           \n
-#  |    /   |           |           |         |            |        /      \           | |            \n
-#  |   /    |_____      |           |         |------------|       /        \          | |\n
-#  |  /     |_____|     |           |         |            |      /--------- \         | |\n
-#  |  \     |           |           |         |            |     /            \        | |\n
-#  |   \    |           |           |         |            |    /              \       | |\n
-#  |    \   |_________  |           |         |            |   /                \      | |\n
-#  |     \  |_________| |__________/          |            |  /                  \     | |\n"
+def getFileList(pagesize,service=service):
+    try:
+        if pagesize >= 1:
+            results = service.files().list(
+                            pageSize=pagesize, fields="nextPageToken, files(id, name)").execute()
+            items = results.get('files', [])
+            if not items:
+                print('No files found.')
+            else:
+                print('Files:')
+                for item in items:
+                    print(u'{0}--------({1})'.format(item['id'], item['name']))
+        elif pagesize <= 0:
+            raise ValueError('Please select a non-zero value greater than 1')
+    except ValueError:
+        print("Invalid value. Values must be within the range: [1, 1000]")
 
 
 
-# class gdriveServices:
-
-#     def __init__(self, service,downLoadPath):
-#       self.service = service
-#       self.downLoadPath = downLoadPath
-def getFileList(pagesize,service):
-    results = service.files().list(
-                    pageSize=pagesize, fields="nextPageToken, files(id, name)").execute()
-    items = results.get('files', [])
-
-    if not items:
-        print('No files found.')
-    else:
-        print('Files:')
-        for item in items:
-            print(u'{0}--------({1})'.format(item['id'], item['name']))
-
-def getContent(pagesize,service):
-    results = service.files().list(
-        pageSize=pagesize, fields="nextPageToken, files(id, name)").execute()
-    items = results.get('files', [])
-
-    if not items:
-        print('No files found.')
-    else:
-        print('Files:')
-        for item in items:
-            print(u'{0} ({1})'.format(item['id'], item['name']))
+def getContent(pagesize,service=service):
+    # results = service.files().list(
+    #     pageSize=pagesize, fields="nextPageToken, files(id, name)").execute()
+    # items = results.get('files', [])
+    #
+    # if not items:
+    #     print('No files found.')
+    # else:
+    #     print('Files:')
+    #     for item in items:
+    #         print(u'{0} ({1})'.format(item['id'], item['name']))
+    try:
+        if pagesize >= 1:
+            results = service.files().list(
+                            pageSize=pagesize, fields="nextPageToken, files(id, name)").execute()
+            items = results.get('files', [])
+            if not items:
+                print('No files found.')
+            else:
+                print('Files:')
+                for item in items:
+                    print(u'{0}--------({1})'.format(item['id'], item['name']))
+        elif pagesize <= 0:
+            raise ValueError('Please select a non-zero value greater than 1')
+    except ValueError:
+        print("ValueError Raised:Values must be within the range: [1, 1000]")
 
     anyKey = input("Press any key to continue!")
     os.system('clear')
     menuCLI()
 
-def uploadFile(filename,filepath,mimetype,service):
+def uploadFile(filename,filepath,mimetype,service=service):
     file_metadata = {'name': filename}
     media = MediaFileUpload(filepath,
                             mimetype=mimetype)
@@ -126,7 +120,7 @@ def uploadFile(filename,filepath,mimetype,service):
     os.system('clear')
     menuCLI()
 
-def downLoadFile(id,filepath,service):
+def downLoadFile(id,filepath,service=service):
     file_id = id
     request = service.files().get_media(fileId=file_id)
     fh = io.BytesIO()
@@ -143,7 +137,7 @@ def downLoadFile(id,filepath,service):
     os.system('clear')
     menuCLI()
 
-def downLoadAllFiles(service):
+def downLoadAllFiles(service=service):
     results = service.files().list(
                     pageSize=100, fields="nextPageToken, files(id, name)").execute()
     items = results.get('files', [])
@@ -185,7 +179,7 @@ def menuCLI():
             choice=int(input("Enter your choice : "))
 
             if choice == 1:
-                pagesize = input("Enter the number of files you want to view. (1 - 100) : ")
+                pagesize = int(input("Enter the number of files you want to view. (1 - 100) : "))
                 getContent(pagesize,service)
                 break
 
@@ -230,16 +224,11 @@ def menuCLI():
                 print("Invalid Choice. Enter 1-5 : ")
                 menuCLI()
         except ValueError:
-            print("Invalid Choice. Enter 1-5 : ")
+            print("Incorrect input, Please try again\n ")
         except EOFError:
             print("EOF Error in Menu")
 
     exit
-
-
-
-
-
 
 if __name__ == '__main__':
     menuCLI()

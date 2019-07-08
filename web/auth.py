@@ -45,12 +45,11 @@ class auth:
 
             # Call the Drive v3 API
         service = build('drive', 'v3', credentials=creds)
-
+        print(type(service))
         return service
 
-        
+
         # gdsInst = gdriveServices(service,path)
 
         # uploadFile('sample2.jpg',path,'image/jpeg',service)
         # downLoadFile('1d0NwR1pTKHedl4mDtLJdJZ9HXlYv00JE',downLoadPath,service)
-
