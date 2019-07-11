@@ -77,16 +77,7 @@ def getFileList(pagesize,service=service):
 
 
 def getContent(pagesize,service=service):
-    # results = service.files().list(
-    #     pageSize=pagesize, fields="nextPageToken, files(id, name)").execute()
-    # items = results.get('files', [])
-    #
-    # if not items:
-    #     print('No files found.')
-    # else:
-    #     print('Files:')
-    #     for item in items:
-    #         print(u'{0} ({1})'.format(item['id'], item['name']))
+
     try:
         if pagesize >= 1:
             results = service.files().list(
@@ -108,13 +99,19 @@ def getContent(pagesize,service=service):
     menuCLI()
 
 def uploadFile(filename,filepath,mimetype,service=service):
-    file_metadata = {'name': filename}
-    media = MediaFileUpload(filepath,
-                            mimetype=mimetype)
-    file = service.files().create(body=file_metadata,
-                                        media_body=media,
-                                        fields='id').execute()
-    print('File ID: %s' % file.get('id'))
+    try:
+        if mimetype and (mimetype in mime_types.values()):
+            file_metadata = {'name': filename}
+            media = MediaFileUpload(filepath,
+                                    mimetype=mimetype)
+            file = service.files().create(body=file_metadata,
+                                                media_body=media,
+                                                fields='id').execute()
+            print('File ID: %s' % file.get('id'))
+        else:
+            raise TypeError('Invalid or Missing MIMETYPE')
+    except TypeError:
+        print("Invalid or Missing MIMETYPE")
 
     anyKey = input("Press any key to continue!")
     os.system('clear')
@@ -155,7 +152,7 @@ def downLoadAllFiles(service=service):
             while done is False:
                 status, done = downloader.next_chunk()
                 print("Download %d%%." % int(status.progress() * 100))
-            with io.open(downLoadPath+'/'+item['name'],'wb') as f:
+            with io.open(os.path.join(downLoadPath,item['name']),'wb') as f:
                 fh.seek(0)
                 f.write(fh.read())
 
@@ -194,7 +191,7 @@ def menuCLI():
                     into the google drive
                 """
 
-                print("Generating the list of mimetype, Please select the relevant one ")
+                print("Generating the list of mimetype,\n\n Please select the relevant one ")
                 for k, v in mime_types.items():
                     print(k, '>', v)
                 print("\n\n")
@@ -211,7 +208,7 @@ def menuCLI():
 
                 fileid = input("Enter the file id that you want to download : ")
                 filename = input("Enter the name that you want the file to be saved as with extension (.jpeg,.doc,.pdf)")
-                downLoadFile(fileid,downLoadPath+'/'+filename,service)
+                downLoadFile(fileid,os.path.join(downLoadPath,filename),service)
                 break
 
             elif choice == 4:
