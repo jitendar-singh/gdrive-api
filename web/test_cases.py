@@ -36,21 +36,16 @@ class TestServices(unittest.TestCase):
 
 
 
+            # def uploadFile(filename,filepath,mimetype,service=service):
+            #     try:
+            #         if mimetype and (mimetype in mime_types.values()):
+
+
             # Case 2 - MIMETYPE value Error
     def test_upLoadFile_MIME(self):
-        with self.assertRaises(ValueError):
-            main.uploadFile("",filepath,'image.jpeg',service)
-            main.uploadFile("",filepath,'image/jpeg',service)
-
-
-
-
-
-
-
-
-
-
+        with self.assertRaises(TypeError):
+            main.uploadFile("",filepath,'img/jpeg',service)
+            # main.uploadFile("",filepath,'image/jppg',service)
 
 if __name__ == '__main__':
     unittest.main()
