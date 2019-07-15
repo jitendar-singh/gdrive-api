@@ -18,7 +18,7 @@ Complete the steps described in the rest of this page to use a simple Python com
 ###### -Click the Accept button.
 ###### -The application will proceed automatically, and you may close the window/tab.
 
-# Application Funcationalities
+# Application functionality
 #### List all files in the drive
 ######  Lists all the files inside the google drive
 #### Upload a file to the drive
